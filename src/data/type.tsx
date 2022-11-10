@@ -19,8 +19,8 @@ export type ToDoListPropsType = {
     idTasksList: string
     tasks: Array<TaskType>
     removeTask: (idTasksList: string, idTask: string) => void
-    changeFilter: (value: FilterValuesType) => void
-    addTask: (title: string) => void
-    changeTaskStatus: (taskId: string, isDone: boolean) => void
+    changeFilter: (idTasksList: string, value: FilterValuesType) => void
+    addTask: (idTasksList: string, title: string) => void
+    changeTaskStatus: (idTasksList: string, idTask: string, newStatus:boolean) => void
     // filter: FilterValuesType
 }

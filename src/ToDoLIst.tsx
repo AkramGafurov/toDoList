@@ -9,7 +9,7 @@ export function Todolist(props: ToDoListPropsType) {
 
     const addTask = () => {
         if (title.trim() !== "") {
-            props.addTask(title.trim());
+            props.addTask(props.idTasksList, title.trim());
             setTitle("");
         } else {
             setError("Title is required");
@@ -24,10 +24,15 @@ export function Todolist(props: ToDoListPropsType) {
             addTask();
         }
     }
-    const onAllClickHandler = () => props.changeFilter("all");
-    const onActiveClickHandler = () => props.changeFilter("active");
-    const onCompletedClickHandler = () => props.changeFilter("completed");
-    const onDeleteTaskClickHandler = (idTasksList: string, idTask: string) => props.removeTask(idTasksList, idTask)
+    const onAllClickHandler = () => props.changeFilter(props.idTasksList,"all");
+    const onActiveClickHandler = () => props.changeFilter(props.idTasksList,"active");
+    const onCompletedClickHandler = () => props.changeFilter(props.idTasksList,"completed");
+    const onDeleteTaskClickHandler = (idTasksList: string, idTask: string) => {
+        props.removeTask(idTasksList, idTask)
+    }
+    const onStatusChangeHandler = (idTasksList: string, idTask: string, newStatus:boolean) => {
+        props.changeTaskStatus(idTasksList, idTask, newStatus);
+    }
 
 
     return <div>
@@ -45,13 +50,12 @@ export function Todolist(props: ToDoListPropsType) {
 
             {
                 props.tasks.map(t => {
-                    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                        props.changeTaskStatus(t.id, e.currentTarget.checked);
-                    }
-
                     return <li key={t.id} className={t.isDone ? "is-done" : ""}>
                         <input type="checkbox"
-                               onChange={onChangeHandler}
+                               onChange={(e)=> {
+                                  let newStatus = e.currentTarget.checked
+                                   onStatusChangeHandler(props.idTasksList, t.id, newStatus)
+                               }}
                                checked={t.isDone}/>
                         <span>{t.title}</span>
                         <button onClick={()=> {
