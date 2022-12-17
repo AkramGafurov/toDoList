@@ -25,3 +25,6 @@ export type ToDoListPropsType = {
     // filter: FilterValuesType
     removeToDoList:(idTasksList: string)=>void
 }
+export type InputPropsType = {
+    callback: (title:string)=>void
+}

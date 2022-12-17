@@ -1,29 +1,25 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {ToDoListPropsType} from './data/type';
+import {Input} from "./components/Input";
 
 
 export function ToDoList(props: ToDoListPropsType) {
 
-    let [title, setTitle] = useState("")
-    let [error, setError] = useState<string | null>(null)
+    // let [title, setTitle] = useState("")
+    // let [error, setError] = useState<string | null>(null)
 
-    const addTask = () => {
-        if (title.trim() !== "") {
-            props.addTask(props.idTasksList, title.trim());
-            setTitle("");
-        } else {
-            setError("Title is required");
-        }
+    // const addTask = () => {
+    //     if (title.trim() !== "") {
+    //         props.addTask(props.idTasksList, title.trim());
+    //         setTitle("");
+    //     } else {
+    //         setError("Title is required");
+    //     }
+    // }
+    const addTaskHandler = (newTitle: string) => {
+        props.addTask(props.idTasksList, newTitle);
     }
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
-    }
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null);
-        if (e.charCode === 13) {
-            addTask();
-        }
-    }
+
     const onAllClickHandler = () => props.changeFilter(props.idTasksList, "all");
     const onActiveClickHandler = () => props.changeFilter(props.idTasksList, "active");
     const onCompletedClickHandler = () => props.changeFilter(props.idTasksList, "completed");
@@ -40,16 +36,19 @@ export function ToDoList(props: ToDoListPropsType) {
     return <div>
 
         <h3>{props.title}
-        <button onClick={removeToDoListHandler}>X</button></h3>
-        <div>
-            <input value={title}
-                   onChange={onChangeHandler}
-                   onKeyPress={onKeyPressHandler}
-                   className={error ? "error" : ""}
-            />
-            <button onClick={addTask}>+</button>
-            {error && <div className="error-message">{error}</div>}
-        </div>
+            <button onClick={removeToDoListHandler}>X</button>
+        </h3>
+
+        <Input callback={addTaskHandler}/>
+        {/*<div>*/}
+        {/*    <input value={title}*/}
+        {/*           onChange={onChangeHandler}*/}
+        {/*           onKeyPress={onKeyPressHandler}*/}
+        {/*           className={error ? "error" : ""}*/}
+        {/*    />*/}
+        {/*    <button onClick={addTask}>+</button>*/}
+        {/*    {error && <div className="error-message">{error}</div>}*/}
+        {/*</div>*/}
 
         <ul>
             {
