@@ -23,4 +23,5 @@ export type ToDoListPropsType = {
     addTask: (idTasksList: string, title: string) => void
     changeTaskStatus: (idTasksList: string, idTask: string, newStatus:boolean) => void
     // filter: FilterValuesType
+    removeToDoList:(idTasksList: string)=>void
 }
