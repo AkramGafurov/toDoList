@@ -1,6 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {ToDoListPropsType} from './data/type';
 import {Input} from "./components/Input";
+import {EditableSpan} from "./components/EditableSpan";
 
 
 export function ToDoList(props: ToDoListPropsType) {
@@ -26,7 +27,7 @@ export function ToDoList(props: ToDoListPropsType) {
     const onDeleteTaskClickHandler = (idTasksList: string, idTask: string) => {
         props.removeTask(idTasksList, idTask)
     }
-    const onStatusChangeHandler = (idTasksList: string, idTask: string, newStatus: boolean) => {
+    const onChangeStatus = (idTasksList: string, idTask: string, newStatus: boolean) => {
         props.changeTaskStatus(idTasksList, idTask, newStatus);
     }
     const removeToDoListHandler = () => {
@@ -54,17 +55,26 @@ export function ToDoList(props: ToDoListPropsType) {
             {
                 props.tasks.map(t => {
                     return <li key={t.id} className={t.isDone ? "is-done" : ""}>
-                        <input type="checkbox"
-                               onChange={(e) => {
-                                   let newStatus = e.currentTarget.checked
-                                   onStatusChangeHandler(props.idTasksList, t.id, newStatus)
-                               }}
-                               checked={t.isDone}/>
-                        <span>{t.title}</span>
-                        <button onClick={() => {
-                            onDeleteTaskClickHandler(props.idTasksList, t.id)
-                        }}>x
-                        </button>
+                        <EditableSpan
+                            changeStatus={(newStatus) => {
+                                onChangeStatus(props.idTasksList, t.id, newStatus)
+                            }}
+                            status={t.isDone}
+                            title={t.title}
+                            deleteTask={()=> {
+                                onDeleteTaskClickHandler(props.idTasksList, t.id)
+                            }}/>
+                            {/*<input type="checkbox"*/}
+                            {/*       onChange={(e) => {*/}
+                            {/*           let newStatus = e.currentTarget.checked*/}
+                            {/*           onStatusChangeHandler(props.idTasksList, t.id, newStatus)*/}
+                            {/*       }}*/}
+                            {/*       checked={t.isDone}/>*/}
+                            {/*<span>{t.title}</span>*/}
+                            {/*<button onClick={() => {*/}
+                            {/*    onDeleteTaskClickHandler(props.idTasksList, t.id)*/}
+                            {/*}}>x*/}
+                            {/*</button>*/}
                     </li>
                 })
             }

@@ -74,7 +74,7 @@ function App() {
         setTodolists(todolists.filter(item=>item.id!==idTasksList))
         delete tasks[idTasksList]
     }
-    function addNewToDoList(newTitle:string){
+    function addToDoList(newTitle:string){
         const newToDoListId=v1()
         const newToDoList:TodolistsType={id: newToDoListId, title: newTitle, filter: 'all'}
         setTodolists([...todolists,newToDoList])
@@ -83,7 +83,7 @@ function App() {
 
     // setTasks([...tasks]);
     return (<div className="App">
-            <Input callback={addNewToDoList}/>
+            <Input callback={addToDoList}/>
             {todolists.map(item => {
                 let tasksForTodolist = tasks[item.id];
 

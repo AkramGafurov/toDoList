@@ -1,4 +1,5 @@
 import {v1} from "uuid";
+import {EditableSpan} from "../components/EditableSpan";
 
 export type FilterValuesType = "all" | "active" | "completed";
 
@@ -27,4 +28,10 @@ export type ToDoListPropsType = {
 }
 export type InputPropsType = {
     callback: (title:string)=>void
+}
+export type EditableSpanPropsType={
+    changeStatus:(newStatus:boolean)=>void,
+    status: boolean,
+    title: string,
+    deleteTask:()=>void,
 }
